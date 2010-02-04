@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Panel xmlns:mx="http://www.adobe.com/2006/mxml" layout="absolute"
+	styleName="pictureFrame"
+	creationComplete="completeHandler()">
+
+	<mx:Metadata>
+        [Event(name="change", type="flash.events.Event")]
+    </mx:Metadata>
+
+	<mx:states>
+		<mx:State name="camera">
+			<mx:RemoveChild target="{bCamera}"/>
+			<mx:SetProperty target="{pic}" name="visible" value="false"/>
+			<mx:SetProperty target="{vd}" name="visible" value="true"/>
+			<mx:AddChild relativeTo="{controlbar1}">
+				<mx:ButtonBar id="cameraButtons" itemClick="cameraButtons_click(event)" width="100%">
+					<mx:dataProvider>
+						<mx:Object icon="@Embed('assets/camera.png')" toolTip="Take Picture"/>
+						<mx:Object icon="@Embed('assets/cross.png')" toolTip="Cancel"/>
+					</mx:dataProvider>
+				</mx:ButtonBar>
+			</mx:AddChild>
+		</mx:State>
+	</mx:states>
+
+	<mx:Script>
+		<![CDATA[
+			import mx.graphics.ImageSnapshot;
+			import mx.controls.Alert;
+
+			import mx.events.ItemClickEvent;
+			import mx.graphics.codec.JPEGEncoder;
+			
+			private var _source:ByteArray;
+			public var missingImageSource:* = "assets/male_user_gray.png";
+			
+			[Bindable] public var pictureWidth:int = 160;
+			[Bindable] public var pictureHeight:int = 160;
+
+		    private var camera:Camera;
+			
+			private function completeHandler():void
+			{
+				pic.addEventListener(NativeDragEvent.NATIVE_DRAG_ENTER, dragInHandler);
+				pic.addEventListener(NativeDragEvent.NATIVE_DRAG_DROP, dragDropHandler);
+			}
+			
+			public function set source(source:ByteArray):void
+			{
+				_source = source;
+				if (source == null)
+				{
+					//pic.source = missingImageSource;
+				}
+				else
+				{
+					pic.source = _source;
+				}
+			}
+			
+			public function get source():ByteArray
+			{
+				return _source;
+			}
+			
+			private function cameraButtons_click(event:ItemClickEvent):void 
+			{
+				switch (event.index)
+				{
+					case 0:
+						takePicture(vd);
+						vd.attachCamera(null);
+						break;
+					case 1:
+			        	vd.attachCamera(null);
+						currentState = "";
+						break;						
+				}
+            }			
+			
+			private function startCamera():void
+			{
+	            camera = Camera.getCamera();
+		        currentState = "camera";
+		        vd.attachCamera(camera);
+			}
+			
+	        private function takePicture(object:DisplayObject):void
+	        {
+				var bd:BitmapData = ImageSnapshot.captureBitmapData(object);
+//	        	var bd:BitmapData = new BitmapData(pictureWidth, pictureHeight);
+//				bd.draw(object);
+//	        	vd.attachCamera(null);
+				var encoder:JPEGEncoder = new JPEGEncoder();
+//				source = new Bitmap(bd);
+				source = encoder.encode(bd);
+				currentState = "";
+				dispatchEvent(new Event(Event.CHANGE));
+	        }
+	        
+
+			private function dragInHandler(event:NativeDragEvent):void{
+				NativeDragManager.acceptDragDrop(pic);
+			}
+
+			private function dragDropHandler(event:NativeDragEvent):void
+			{
+				var dropFiles:Array = event.clipboard.getData(ClipboardFormats.FILE_LIST_FORMAT) as Array;
+				var file:File = dropFiles[0];
+	            if (file.extension.toLowerCase() == "png" ||
+	            	file.extension.toLowerCase() == "gif" ||
+	            	file.extension.toLowerCase() == "jpg" ||
+	            	file.extension.toLowerCase() == "jpeg")
+	            {
+					loadFile(file.nativePath);
+		        }
+	  		}
+
+			private function loadFile(nativePath:String):void
+			{
+				pic.addEventListener(Event.COMPLETE, loadCompleteHandler);
+            	if (Capabilities.os.search("Mac") >= 0)
+            	{
+              		pic.source = "file://" + nativePath;
+            	} 
+            	else 
+            	{
+              		pic.source = nativePath;
+             	}
+            }
+	        
+			private function loadCompleteHandler(event:Event):void
+			{
+				pic.removeEventListener(Event.COMPLETE, loadCompleteHandler);
+				takePicture(pic);
+			}
+			
+		]]>
+	</mx:Script>
+	
+	<mx:Image id="pic" width="{pictureWidth}" height="{pictureHeight}" source="@Embed('assets/male_user_gray.png')"/>
+	<mx:VideoDisplay id="vd" width="{pictureWidth}" height="{pictureHeight}" visible="false"/>
+	
+	<mx:ControlBar paddingTop="0" paddingBottom="0" paddingLeft="0" paddingRight="0" id="controlbar1">
+		<mx:Button id="bCamera" icon="@Embed('assets/camera_edit.png')" width="100%" 
+			click="startCamera()"/> 
+	</mx:ControlBar>	
+
+</mx:Panel>

@@ -1,0 +1,332 @@
+@font-face
+{
+    src: url("assets/fonts/MyriadWebPro.ttf");
+    font-family: main;
+    font-style: normal;
+    font-weight: normal;
+}
+
+@font-face
+{
+    src: url("assets/fonts/MyriadWebPro-Bold.ttf");
+    font-family: main;
+    font-style: normal;
+    font-weight: bold;
+}
+
+WindowedApplication {
+	paddingTop:0;
+	paddingBottom:0;
+	paddingLeft:0;
+	paddingRight:0;
+	vertical-gap:0;
+	theme-color: #919191;
+	font-family: main;
+	color: #333333;
+	font-size: 12;
+}
+
+Window {
+	border-skin: Embed("assets/dialog_skin.png",
+			scaleGridLeft="15",
+			scaleGridRight="288",
+			scaleGridTop="60",
+			scaleGridBottom="124");
+	header-height: 0;
+	font-family: main;
+	color: #333333;
+	font-size: 12;
+}
+
+.titleWindowTitle {
+	font-size: 14;
+	font-weight: bold;	
+	padding-left: 12;
+}
+
+.appContainer {
+	background-image: Embed("assets/app_skin.png",
+			scaleGridLeft="15",
+			scaleGridRight="970",
+			scaleGridTop="60",
+			scaleGridBottom="64");
+	background-size: "100%";
+}
+
+ComboBox {
+	skin: Embed("assets/combobox_skin.png",
+			scaleGridLeft="4",
+			scaleGridRight="130",
+			scaleGridTop="4",
+			scaleGridBottom="25");
+	over-skin: Embed("assets/combobox_over_skin.png",
+			scaleGridLeft="4",
+			scaleGridRight="130",
+			scaleGridTop="4",
+			scaleGridBottom="25");
+	down-skin: Embed("assets/combobox_down_skin.png",
+			scaleGridLeft="4",
+			scaleGridRight="130",
+			scaleGridTop="4",
+			scaleGridBottom="25");
+	corner-radius: 2;
+	open-duration: 0;
+	close-duration: 0;
+	font-weight: normal;
+}
+
+Button {
+	skin: Embed("assets/button_skin.png",
+			scaleGridLeft="8",
+			scaleGridRight="23",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+	over-skin: Embed("assets/button_over_skin.png",
+			scaleGridLeft="8",
+			scaleGridRight="23",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+	open-duration: 0;
+	close-duration: 0;
+	corner-radius: 2;
+}
+
+.popupButton {
+	open-duration: 0;
+	close-duration: 0;
+}
+
+TextInput {
+	border-skin: Embed("assets/textinput_skin.png",
+			scaleGridLeft="4",
+			scaleGridRight="148",
+			scaleGridTop="4",
+			scaleGridBottom="25");
+	padding-left: 2;
+	vertical-align:middle;
+}
+
+.linkButtonMenu {
+	
+}
+
+Panel {
+   borderColor: #D9D9D9;
+   borderAlpha: 1;
+}
+
+Ratings{
+	horizontalGap:10;
+	paddingTop:0;
+	paddingLeft:6;
+}
+
+RatingItem{
+	borderAlpha:0.5;
+	fillRatios:0,255;
+    fillEnabled:true;
+	fillColors:#E6E6E6,#C7C7C7;
+	fillSelectedColors:#1C7487,#1C7487;
+	fillAlphas:0.9,1;
+}
+
+SuperTabNavigator {
+	border-style:none;
+	cornerRadius: 0;
+	tabStyleName: "myButtonStyleName";
+	firstButtonStyleName: "myButtonStyleName";
+	lastButtonStyleName: "myButtonStyleName";
+	selectedTabTextStyleName: "mySelectedTabs";
+	tab-height: 27;
+	padding-top:0;
+	popupButtonStyleName: "tabPopupButton";
+}
+
+.tabPopupButton {
+	skin: Embed("assets/icon_pulldown.png");
+}
+
+.tabContainer {
+	background-image:Embed("assets/tabnav_skin.png",
+		scaleGridLeft="10",
+		scaleGridRight="430",
+		scaleGridTop="60",
+		scaleGridBottom="64");
+}
+
+.myButtonStyleName {
+	font-weight:normal;
+	text-align:left;
+/*	tabCloseButton: Embed("assets/icon_close.png"); */
+	skin:Embed("assets/tab_skin.png",
+			scaleGridLeft="1",
+			scaleGridRight="160",
+			scaleGridTop="0",
+			scaleGridBottom="21");
+	selected-up-skin:Embed("assets/tab_selected_skin.png",
+			scaleGridLeft="1",
+			scaleGridRight="160",
+			scaleGridTop="1",
+			scaleGridBottom="20");
+	selected-over-skin:Embed("assets/tab_selected_skin.png",
+			scaleGridLeft="1",
+			scaleGridRight="160",
+			scaleGridTop="1",
+			scaleGridBottom="20");
+	over-skin:Embed("assets/tab_over_skin.png",
+			scaleGridLeft="1",
+			scaleGridRight="160",
+			scaleGridTop="1",
+			scaleGridBottom="20");
+}
+
+
+.mySelectedTabs {
+	/* font-weight:bold; */
+}
+
+
+.title
+{
+	/* color:#535353; */
+	color:#666666;
+    font-family: main; 
+    font-size: 14pt;
+    font-weight: bold;
+}
+
+.smallTitle
+{
+	color:#535353;	
+    font-family: main; 
+    font-size: 12pt;
+}
+
+.appTitle
+{
+	color:#222222;	
+    font-family: main; 
+    font-size: 20pt;
+}
+
+.windowTitle
+{
+	color:#222222;	
+    font-family: main; 
+    font-size: 16pt;
+}
+
+
+HSlider {
+	showTrackHighlight: true;
+	theme-color: #1C7487;
+}
+
+.welcome {
+	font-family: main;
+	color: #535353;
+}
+	
+.linkButtonList {
+	corner-radius: 0;
+	text-align:left;
+	font-weight:normal;
+}	
+
+.viewAllLink {
+	text-decoration:underline;
+	color: #0000CC;
+	roll-over-color: #FFFFFF;
+}
+
+ButtonBar {
+   	firstButtonStyleName: firstButton;
+   	buttonStyleName: middleButton;
+   	lastButtonStyleName: lastButton;
+}
+  
+.firstButton {
+	skin: Embed("assets/button_bar_first.png",
+			scaleGridLeft="8",
+			scaleGridRight="27",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+	over-skin: Embed("assets/button_bar_first_over.png",
+			scaleGridLeft="8",
+			scaleGridRight="27",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+}
+
+.middleButton {
+	skin: Embed("assets/button_bar_middle.png",
+			scaleGridLeft="8",
+			scaleGridRight="27",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+	over-skin: Embed("assets/button_bar_middle_over.png",
+			scaleGridLeft="8",
+			scaleGridRight="27",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+}
+
+.lastButton {
+	skin: Embed("assets/button_bar_last.png",
+			scaleGridLeft="8",
+			scaleGridRight="27",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+	over-skin: Embed("assets/button_bar_last_over.png",
+			scaleGridLeft="8",
+			scaleGridRight="27",
+			scaleGridTop="8",
+			scaleGridBottom="21");
+}
+
+.iconClose {
+	skin: Embed("assets/icon_close16.png");
+	over-skin: Embed("assets/icon_close_over16.png");
+}
+
+.tabCloseButton {
+	skin: Embed("assets/icon_close16.png");
+	over-skin: Embed("assets/icon_close_over16.png");
+}
+
+.iconMinimize {
+	skin: Embed("assets/icon_minimize16.png");
+	over-skin: Embed("assets/icon_minimize_over16.png");
+}
+.iconMaximize {
+	skin: Embed("assets/icon_maximize16.png");
+	over-skin: Embed("assets/icon_maximize_over16.png");
+}
+
+.nestedTab {
+	button-style-name: nestedTabButton;
+	first-button-style-name: nestedTabButton;		
+	last-button-style-name: nestedTabButton;
+}
+
+.nestedTabButton {
+	skin: Embed("assets/blank.png");
+	font-weight: normal;
+	text-roll-over-color: #CCCCCC;
+	text-roll-over-color: #CCCCCC;
+}
+
+.error {
+	color: #FF0000;	
+}
+
+.pictureFrame {
+	drop-shadow-enabled: false;
+	header-height: 0;
+	border-color: #919191;
+	border-alpha: 0.7;
+	border-thickness-left: 1;
+	border-thickness-right: 1;
+	border-thickness-bottom: 0;
+	corner-radius: 0;
+}

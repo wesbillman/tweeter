@@ -1,0 +1,14 @@
+<sql>
+<statement>
+DROP TABLE ACCOUNT
+</statement>
+<statement>
+DROP TABLE CONTACT
+</statement>
+<statement>
+DROP TABLE OPPORTUNITY
+</statement>
+<statement>
+DROP TABLE CALENDARITEM
+</statement>
+</sql>

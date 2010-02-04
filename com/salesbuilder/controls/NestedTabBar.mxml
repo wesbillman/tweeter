@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Christophe Coenraets, christophe@coenraets.org - http://coenraets.org -->
+<mx:HBox xmlns:mx="http://www.adobe.com/2006/mxml" backgroundColor="#EBEBEB" height="28" width="100%" paddingTop="6" paddingLeft="8">
+
+	<mx:Script>
+		<![CDATA[
+
+			import mx.containers.ViewStack;
+			import mx.controls.Label;
+			
+			[Bindable]
+			private var _viewStack:ViewStack;
+			
+			// Selected option in the Tab submenu
+			private var selectedOption:Label;
+
+			public function set viewStack(viewStack:ViewStack):void
+			{
+				_viewStack = viewStack;
+			}
+			
+			private function setInitialSelection():void
+			{
+				if (labels && labels[0])
+				{
+					selectedOption = labels[0];
+					selectedOption.setStyle('fontWeight', 'bold');
+				}	
+			}
+			
+			private function optionMouseOver(event:MouseEvent):void
+			{
+				if (event.currentTarget != selectedOption)
+				{
+					Label(event.currentTarget).setStyle('color', '#666666');
+					Label(event.currentTarget).setStyle('fontWeight', 'bold');	
+				}
+			}
+	
+			private function optionMouseOut(event:MouseEvent):void
+			{
+				if (event.currentTarget != selectedOption)
+				{
+					Label(event.currentTarget).setStyle('color', '#000000');
+					Label(event.currentTarget).setStyle('fontWeight', 'normal');	
+				}
+			}
+	
+			private function optionMouseDown(event:MouseEvent):void
+			{
+				if (event.currentTarget != selectedOption)
+				{
+					if (selectedOption)
+					{
+						selectedOption.setStyle('color', '#000000');
+						selectedOption.setStyle('fontWeight', 'normal');	
+					}
+					selectedOption = event.currentTarget as Label;
+					Label(event.currentTarget).setStyle('color', '#000000');
+					Label(event.currentTarget).setStyle('fontWeight', 'bold');	
+					_viewStack.selectedIndex = Label(event.currentTarget).repeaterIndex;
+				}
+			}
+
+		]]>
+	</mx:Script>
+
+	<mx:Repeater id="options" dataProvider="{_viewStack.getChildren()}" repeatEnd="setInitialSelection()">
+		<mx:Label id="labels" text="{options.currentItem.label}" creationComplete="Label(event.target).width = Label(event.target).width + 10"
+			mouseDown="optionMouseDown(event)"
+			mouseOver="optionMouseOver(event)"
+			mouseOut="optionMouseOut(event)"/>
+	</mx:Repeater>
+	
+</mx:HBox>	
