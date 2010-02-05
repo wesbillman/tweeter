@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Window xmlns:mx="http://www.adobe.com/2006/mxml" 
+  xmlns:c="com.tweeter.controls.*" 
+  xmlns:m="com.tweeter.model.*" 
+	layout="absolute"
+	type="normal"
+	transparent="true"
+	showFlexChrome="false"
+	systemChrome="none"
+	resizable="false"
+	width="400" height="190"
+	dropShadowEnabled="true"
+	creationComplete="completeHandler()">
+
+	<mx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+			import mx.controls.Menu;
+			import mx.events.AIREvent;
+			import mx.collections.ArrayCollection;
+  		import com.tweeter.context.Context;
+
+  		[Bindable]
+  		public var accountNameList:ArrayCollection = Context.getAttribute("accountNameList");
+  		
+			[Bindable]
+			public var phoneNumber:String;
+			
+			[Embed("/assets/male_user_gray.png")]
+			public var userIcon:Class;
+			
+			private function completeHandler():void
+			{
+				header.addEventListener(MouseEvent.MOUSE_DOWN, 
+						function(event:MouseEvent):void
+						{
+							nativeWindow.startMove();
+						});
+						
+				addEventListener(AIREvent.WINDOW_DEACTIVATE, windowDeactivateHandler);						
+			}
+
+			private function windowDeactivateHandler(event:AIREvent):void
+			{
+
+			}
+
+			override public function open(openWindowActive:Boolean=true):void
+			{
+				super.open(openWindowActive);
+				nativeWindow.x = (Capabilities.screenResolutionX - width) / 2;
+				nativeWindow.y = (Capabilities.screenResolutionY - height) / 2;
+			}
+			
+		]]>
+	</mx:Script>
+
+	<mx:Label text="New Tweet" styleName="windowTitle" left="14" top="7"/>
+	<mx:Button styleName="iconClose" top="10" right="16" click="close()"/>
+	<mx:Canvas id="header" height="30" top="0" left="0" right="30"/>
+	<mx:TextArea id="_notes" top="32" left="7" right="7" bottom="50" />
+
+  <c:ComboBox left="12" bottom="16" id="accountName" dataProvider="{accountNameList}" />
+
+  <mx:Button id="postButton" label="Post" bottom="16" right="12"/>
+</mx:Window>

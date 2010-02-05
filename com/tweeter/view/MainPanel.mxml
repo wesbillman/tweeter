@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Canvas 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:c="com.tweeter.controls.*"
+	xmlns:v="com.tweeter.view.*"
+	xmlns:util="com.tweeter.util.*"
+	creationComplete="creationCompleteHandler()" 
+	width="100%" height="100%">
+
+	<mx:Script>
+		<![CDATA[
+
+		import mx.events.ItemClickEvent;
+		import mx.collections.ArrayCollection;
+		import com.tweeter.context.Context;
+		
+		[Bindable]
+		public var accountNameList:ArrayCollection = Context.getAttribute("accountNameList");	
+			
+		private	var dialog:NewTweet = new NewTweet();
+		
+		public function creationCompleteHandler():void
+		{
+
+		}
+					
+		private function buttonBarClick(event:ItemClickEvent):void
+		{
+		  trace(event.index);
+/*      switch (event.index) 
+      {
+        case 0:
+          tabManager.openTab(AccountSummary);
+            break;
+        case 1:
+          tabManager.openTab(ContactSummary);
+            break;
+        case 2:
+          tabManager.openTab(OpportunitySummary);
+            break;
+        case 3:
+          tabManager.openTab(Dashboard);
+          break;
+        case 4:
+          tabManager.openTab(CalendarView);
+          break;
+        case 5:
+          var config:ConfigurationDialog = new ConfigurationDialog();
+          config.open();          
+            break;
+      }*/
+		}
+					
+		private function newTweet():void
+		{
+      trace("New Tweet Clicked");
+      dialog.open();
+			dialog.activate();
+		}
+
+		]]>
+	</mx:Script>
+	
+	<!-- The Window Header -->
+	<mx:Canvas id="header" top="0" left="0" right="0">
+		<c:ComboBox left="50" top="16" id="accountName" dataProvider="{accountNameList}" />
+		<mx:ButtonBar id="bb" right="115" height="29" itemClick="buttonBarClick(event)" verticalCenter="0" buttonWidth="29">
+			<mx:dataProvider>
+				<mx:Object icon="@Embed('/assets/balloon-twitter.png')" toolTip="Timeline"/>
+				<mx:Object icon="@Embed('/assets/megaphone.png')" toolTip="Mentions"/>
+				<mx:Object icon="@Embed('/assets/mail.png')" toolTip="Messages"/>
+			</mx:dataProvider>
+		</mx:ButtonBar>
+		<mx:Button icon="@Embed('/assets/plus.png')" width="29" height="29" click="newTweet()" verticalCenter="0" right="81.5"/>		
+		<mx:Image source="@Embed('/assets/top_separator.png')" right="66.5" y="0"/>
+	</mx:Canvas>
+
+	<mx:HRule bottom="0" left="8" right="8" width="100%" height="1" strokeColor="#B9B9B9"/>
+</mx:Canvas>

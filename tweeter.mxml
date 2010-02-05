@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:WindowedApplication 
+	xmlns:mx="http://www.adobe.com/2006/mxml"
+	xmlns:v="com.tweeter.view.*" 
+	width="400" height="500" minWidth="350" minHeight="350"
+	showFlexChrome="false"
+	showStatusBar="false"
+	applicationComplete="completeHandler()">
+
+	<mx:Script>
+		<![CDATA[
+
+		import mx.effects.Resize;
+		import mx.events.EffectEvent;
+		import mx.effects.easing.Circular;
+		import mx.controls.Alert;
+		import air.update.ApplicationUpdaterUI;
+		import air.update.events.UpdateEvent;
+		import com.tweeter.view.MainPanel;
+		import com.tweeter.context.Context;
+		
+		private var updater:ApplicationUpdaterUI;			
+
+    private function completeHandler():void
+    {
+      NativeApplication.nativeApplication.addEventListener(Event.EXITING, applicationExitHandler); 
+
+      // Center application
+      nativeWindow.x = (Capabilities.screenResolutionX - 1000) / 2;
+      nativeWindow.y = (Capabilities.screenResolutionY - 800) / 2;
+
+      draggableHeader.addEventListener(MouseEvent.MOUSE_DOWN, 
+      function(event:MouseEvent):void
+      {
+      	nativeWindow.startMove();
+      });
+
+      initializeUpdater();
+    }
+    
+		private function openMainPanelSuccess():void
+		{
+						
+		}
+		
+		private function initializeUpdater():void
+		{    
+			updater = new ApplicationUpdaterUI();
+			updater.configurationFile = new File("app:/config/update.xml");
+			updater.addEventListener(ErrorEvent.ERROR, updaterErrorHandler);
+			updater.addEventListener(UpdateEvent.INITIALIZED, updaterInitializedHandler);
+			updater.initialize();
+		}
+
+    private function updaterErrorHandler(event:ErrorEvent):void 
+    {
+      Alert.show(event.toString());
+    }
+
+    private function updaterInitializedHandler(event:UpdateEvent):void 
+    {
+    	updater.checkNow();
+    }
+
+  	private function applicationExitHandler(event:Event):void
+  	{
+
+  	}
+
+		private function toggleMaximize():void
+		{
+			if (nativeWindow.displayState == NativeWindowDisplayState.MAXIMIZED)
+			{
+				restore();
+			}
+			else
+			{
+				maximize();
+			}
+		}
+		
+		]]>
+	</mx:Script>
+	
+	<mx:Style source="styles.css"/>
+
+	<mx:Canvas id="appContainer" width="100%" height="100%" styleName="appContainer">
+		<mx:Image source="assets/icons/icon.png" top="12" left="14" height="32" width="32"/>
+		<mx:Canvas id="draggableHeader" left="0" right="0" height="50"/>
+		<mx:Button id="iconMinimize" styleName="iconMinimize" top="20" right="46" click="minimize()" visible="true"/>
+		<mx:Button id="iconToggle" styleName="iconMaximize" top="20" right="33" click="toggleMaximize()" visible="true"/>
+		<mx:Button styleName="iconClose" top="20" right="20" click="nativeApplication.exit()"/>
+		<v:MainPanel id="mainPanel" top="0" left="0" right="0" bottom="28"/>
+		<mx:Image id="iconGrip" source="@Embed('assets/icon_grip.png')" bottom="14" right="10" 
+			mouseDown="nativeWindow.startResize()" visible="true"/>
+	</mx:Canvas>
+
+</mx:WindowedApplication>
