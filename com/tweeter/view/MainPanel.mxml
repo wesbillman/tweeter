@@ -71,7 +71,7 @@
 				<mx:Object icon="@Embed('/assets/mail.png')" toolTip="Messages"/>
 			</mx:dataProvider>
 		</mx:ButtonBar>
-		<mx:Button icon="@Embed('/assets/plus.png')" width="29" height="29" click="newTweet()" verticalCenter="0" right="81.5"/>		
+		<mx:Button icon="@Embed('/assets/plus.png')" width="29" height="29" click="newTweet()" verticalCenter="0" right="81.5" toolTip="New Tweet" />		
 		<mx:Image source="@Embed('/assets/top_separator.png')" right="66.5" y="0"/>
 	</mx:Canvas>
 
